@@ -1,0 +1,56 @@
+# CleanPulse Madurai Stage 1 Backend Setup
+
+## Work Accomplished
+
+We have successfully generated the Stage 1 Node.js + Express backend API for CleanPulse Madurai.
+
+- **Initialized Project**: Created a modular Node.js project with `express`, `pg`, `jsonwebtoken`, and `bcryptjs`.
+- **Database Configuration**: Configured a `pg` native connection pool using environment variables and implemented a script that gracefully ensures that the `users` and `complaints` tables are initialized.
+- **Authentication**: JWT authentication with user registration and secure hashing using `bcryptjs`.
+- **Role-based Access Control**: Middlewares created to authorize API routes based on `Citizen`, `Worker`, and `Admin` roles.
+- **Models & Controllers**: Logic cleanly isolated into `userModel` / `complaintModel` and `authController` / `complaintController`.
+  - Supports logging complaints, tracking status, and grabbing citizen points leaderboard.
+  - Automatically awards `10 points` to a user when a Worker/Admin designates their complaint's status as `Resolved`.
+- **API Routing**: Clear RESTful URLs configured inside `src/routes/`.
+
+## Generated Structure
+
+```
+backend/
+├── .env
+├── package.json
+└── src/
+    ├── index.js
+    ├── config/
+    │   └── db.js
+    ├── controllers/
+    │   ├── authController.js
+    │   └── complaintController.js
+    ├── middleware/
+    │   ├── authMiddleware.js
+    │   └── roleMiddleware.js
+    ├── models/
+    │   ├── complaintModel.js
+    │   └── userModel.js
+    └── routes/
+        ├── authRoutes.js
+        └── complaintRoutes.js
+```
+
+## Validation
+
+- Verified the Express app correctly compiles with all modules successfully imported.
+- Verified standard error handling triggers correctly (e.g. attempting to start against non-existent `postgres` server produces an explicit `ECONNREFUSED` instead of crashing on undefined references).
+
+## Next Steps for the User
+
+1. Navigate to your backend directory and install dependencies if needed:
+   ```bash
+   cd "backend"
+   npm install
+   ```
+2. Make sure you have a running PostgreSQL instance and that your credentials in [.env](file:///c:/Users/vishnu/Desktop/Smart%20and%20Green%20Madurai%20city/backend/.env) are accurate.
+3. Start the server:
+   ```bash
+   npm start
+   ```

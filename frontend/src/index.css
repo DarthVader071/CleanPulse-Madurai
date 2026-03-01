@@ -1,0 +1,51 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --primary: #10b981;
+  /* Default emerald green */
+  --primary-dark: #047857;
+  --background: #111827;
+  /* Dark theme default */
+  --card: #1f2937;
+  --text: #f3f4f6;
+  --text-muted: #9ca3af;
+}
+
+body {
+  background-color: var(--background);
+  color: var(--text);
+  font-family: 'Inter', system-ui, -apple-system, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Custom Scrollbar for Dark Theme */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: #111827;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #374151;
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #4b5563;
+}
+
+.custom-popup .leaflet-popup-content-wrapper {
+  background: #1f2937 !important;
+  color: #f3f4f6 !important;
+  border: 1px solid #374151;
+}
+
+.custom-popup .leaflet-popup-tip {
+  background: #1f2937 !important;
+}
