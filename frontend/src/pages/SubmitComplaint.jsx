@@ -29,6 +29,7 @@ const LocationMarker = ({ position, setPosition }) => {
 
 const SubmitComplaint = () => {
     const [description, setDescription] = useState('');
+    const [wasteType, setWasteType] = useState('General');
     const [image, setImage] = useState(null);
     const [position, setPosition] = useState(null);
     const [loading, setLoading] = useState(false);
@@ -38,6 +39,16 @@ const SubmitComplaint = () => {
 
     // Madurai coordinates
     const maduraiCenter = [9.9252, 78.1198];
+
+    const wasteCategories = [
+        'General',
+        'Organic (Food/Green)',
+        'Plastic',
+        'Paper/Cardboard',
+        'Metal',
+        'Electronic (E-waste)',
+        'Medical/Hazardous'
+    ];
 
     const handleImageChange = (e) => {
         const file = e.target.files[0];
@@ -65,6 +76,7 @@ const SubmitComplaint = () => {
         const formData = new FormData();
         formData.append('title', 'Waste Hotspot');
         formData.append('description', description);
+        formData.append('waste_type', wasteType);
         formData.append('location_lat', position.lat);
         formData.append('location_lng', position.lng);
         if (image) {
@@ -95,6 +107,21 @@ const SubmitComplaint = () => {
                     {/* Form Section */}
                     <div className="p-6 md:p-8 border-b md:border-b-0 md:border-r border-gray-700">
                         <form onSubmit={handleSubmit} className="space-y-6">
+
+                            <div>
+                                <label className="block text-sm font-medium text-gray-300 mb-2">
+                                    Waste Category
+                                </label>
+                                <select
+                                    value={wasteType}
+                                    onChange={(e) => setWasteType(e.target.value)}
+                                    className="w-full px-4 py-3 bg-gray-900 border border-gray-600 rounded-xl text-white focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-transparent transition-all cursor-pointer"
+                                >
+                                    {wasteCategories.map(cat => (
+                                        <option key={cat} value={cat} className="bg-gray-900 text-white">{cat}</option>
+                                    ))}
+                                </select>
+                            </div>
 
                             <div>
                                 <label className="block text-sm font-medium text-gray-300 mb-2">

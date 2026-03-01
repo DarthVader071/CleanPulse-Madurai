@@ -15,9 +15,13 @@ const Login = () => {
         e.preventDefault();
         setLoading(true);
         try {
-            await login({ email, password });
+            const loggedUser = await login({ email, password });
             toast.success('Successfully logged in!', { duration: 3000 });
-            navigate('/dashboard'); // or admin dashboard depending on role
+            if (loggedUser.role === 'Admin' || loggedUser.role === 'Worker') {
+                navigate('/admin');
+            } else {
+                navigate('/dashboard');
+            }
         } catch (err) {
             toast.error(err.response?.data?.message || 'Failed to login', { duration: 4000 });
         } finally {

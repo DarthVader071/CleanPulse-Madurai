@@ -13,8 +13,8 @@ const Layout = () => {
     };
 
     const navLinks = [
-        ...(user?.role === 'Admin'
-            ? [{ path: '/admin', label: 'Admin Dashboard', icon: <Map size={20} /> }]
+        ...(user?.role === 'Admin' || user?.role === 'Worker'
+            ? [{ path: '/admin', label: 'Control Center', icon: <Map size={20} /> }]
             : [{ path: '/dashboard', label: 'Dashboard', icon: <LayoutDashboard size={20} /> }]),
         ...(user?.role === 'Citizen'
             ? [{ path: '/submit', label: 'Submit Complaint', icon: <FilePlus size={20} /> }]

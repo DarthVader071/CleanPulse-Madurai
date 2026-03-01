@@ -111,9 +111,12 @@ const CitizenDashboard = () => {
                                     <div>
                                         <h3 className="text-lg font-semibold text-white">{complaint.title || 'General Waste'}</h3>
                                         <p className="text-gray-400 text-sm mt-1 line-clamp-2 md:max-w-md">{complaint.description}</p>
-                                        <div className="flex items-center space-x-4 mt-2 text-xs text-gray-500">
-                                            <span className="flex items-center"><Clock size={12} className="mr-1" /> {new Date(complaint.created_at).toLocaleDateString()}</span>
-                                            <span className="bg-gray-700 px-2 py-1 rounded-md">Vulnerability: {Math.round(complaint.risk_score || 0)}</span>
+                                        <div className="flex items-center space-x-4 mt-2 text-xs">
+                                            <span className="flex items-center text-gray-500"><Clock size={12} className="mr-1" /> {new Date(complaint.created_at).toLocaleDateString()}</span>
+                                            <span className="bg-gray-700 text-gray-400 px-2 py-1 rounded-md">Vuln: {Math.round(complaint.risk_score || 0)}</span>
+                                            <span className="bg-blue-500/10 text-blue-400 border border-blue-500/20 px-2 py-1 rounded-md uppercase font-bold text-[10px] tracking-wider">
+                                                {complaint.waste_type || 'General'}
+                                            </span>
                                         </div>
                                     </div>
                                 </div>

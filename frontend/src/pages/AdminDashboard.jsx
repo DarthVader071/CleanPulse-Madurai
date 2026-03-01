@@ -13,6 +13,7 @@ const AdminDashboard = () => {
     const [complaints, setComplaints] = useState([]);
     const [loading, setLoading] = useState(true);
     const [filter, setFilter] = useState('All');
+    const [wasteFilter, setWasteFilter] = useState('All');
     const [showHeatmap, setShowHeatmap] = useState(false);
     const [optimizedRoute, setOptimizedRoute] = useState(null);
     const [routingLoading, setRoutingLoading] = useState(false);
@@ -80,9 +81,11 @@ const AdminDashboard = () => {
         }
     };
 
-    const filteredComplaints = filter === 'All'
-        ? (complaints || [])
-        : (complaints || []).filter(c => c.status === 'Resolved' ? c.status === filter : c.status === filter); // Simpler filter logic for safety
+    const filteredComplaints = (complaints || []).filter(c => {
+        const statusMatch = filter === 'All' || c.status === filter;
+        const wasteMatch = wasteFilter === 'All' || c.waste_type === wasteFilter;
+        return statusMatch && wasteMatch;
+    });
 
     const stats = {
         total: (complaints || []).length,
@@ -129,12 +132,29 @@ const AdminDashboard = () => {
                         <select
                             value={filter}
                             onChange={(e) => setFilter(e.target.value)}
-                            className="bg-transparent text-sm text-white px-2 py-1 outline-none"
+                            className="bg-transparent text-sm text-white px-2 py-1 outline-none cursor-pointer"
                         >
-                            <option value="All">All Statuses</option>
-                            <option value="Pending">Pending</option>
-                            <option value="In Progress">In Progress</option>
-                            <option value="Resolved">Resolved</option>
+                            <option value="All" className="bg-gray-900 text-white">All Statuses</option>
+                            <option value="Pending" className="bg-gray-900 text-white">Pending</option>
+                            <option value="In Progress" className="bg-gray-900 text-white">In Progress</option>
+                            <option value="Resolved" className="bg-gray-900 text-white">Resolved</option>
+                        </select>
+                    </div>
+                    <div className="flex items-center space-x-2 bg-gray-800 rounded-xl p-1 border border-gray-700">
+                        <Filter size={16} className="text-gray-400 ml-2" />
+                        <select
+                            value={wasteFilter}
+                            onChange={(e) => setWasteFilter(e.target.value)}
+                            className="bg-transparent text-sm text-white px-2 py-1 outline-none cursor-pointer"
+                        >
+                            <option value="All" className="bg-gray-900 text-white">All Waste Types</option>
+                            <option value="General" className="bg-gray-900 text-white">General</option>
+                            <option value="Organic (Food/Green)" className="bg-gray-900 text-white">Organic</option>
+                            <option value="Plastic" className="bg-gray-900 text-white">Plastic</option>
+                            <option value="Paper/Cardboard" className="bg-gray-900 text-white">Paper</option>
+                            <option value="Metal" className="bg-gray-900 text-white">Metal</option>
+                            <option value="Electronic (E-waste)" className="bg-gray-900 text-white">Electronic</option>
+                            <option value="Medical/Hazardous" className="bg-gray-900 text-white">Medical/Hazardous</option>
                         </select>
                     </div>
                 </div>
@@ -261,18 +281,37 @@ const AdminDashboard = () => {
                             filteredComplaints.map(complaint => (
                                 <div key={complaint.id} className="bg-gray-900 border border-gray-700 p-4 rounded-xl hover:border-gray-600 transition-colors">
                                     <div className="flex justify-between items-start mb-2">
-                                        <span className={`text-xs px-2 py-1 rounded-md font-bold uppercase tracking-wide ${(complaint.risk_score || 0) > 75 ? 'bg-red-500/20 text-red-500' :
-                                            (complaint.risk_score || 0) > 40 ? 'bg-yellow-500/20 text-yellow-500' : 'bg-emerald-500/20 text-emerald-500'
-                                            }`}>
-                                            Risk: {Math.round(complaint.risk_score || 0)}
-                                        </span>
+                                        <div className="flex space-x-2">
+                                            <span className={`text-xs px-2 py-1 rounded-md font-bold uppercase tracking-wide ${(complaint.risk_score || 0) > 75 ? 'bg-red-500/20 text-red-500' :
+                                                (complaint.risk_score || 0) > 40 ? 'bg-yellow-500/20 text-yellow-500' : 'bg-emerald-500/20 text-emerald-500'
+                                                }`}>
+                                                Risk: {Math.round(complaint.risk_score || 0)}
+                                            </span>
+                                            <span className="text-xs px-2 py-1 rounded-md font-bold uppercase tracking-wide bg-blue-500/10 text-blue-400 border border-blue-500/20">
+                                                {complaint.waste_type || 'General'}
+                                            </span>
+                                        </div>
                                         <span className="text-xs text-gray-400 flex items-center">
                                             <Clock size={10} className="mr-1" />
                                             {new Date(complaint.created_at).toLocaleDateString()}
                                         </span>
                                     </div>
 
-                                    <p className="text-sm text-gray-300 mb-4 line-clamp-2">{complaint.description}</p>
+                                    <div className="flex space-x-4 mb-4">
+                                        {complaint.image_url && (
+                                            <div className="w-16 h-16 rounded-lg overflow-hidden flex-shrink-0 border border-gray-700">
+                                                <img
+                                                    src={`http://localhost:5000${complaint.image_url}`}
+                                                    alt="Evidence"
+                                                    className="w-full h-full object-cover cursor-pointer hover:scale-110 transition-transform"
+                                                    onClick={() => window.open(`http://localhost:5000${complaint.image_url}`, '_blank')}
+                                                />
+                                            </div>
+                                        )}
+                                        <div className="flex-1">
+                                            <p className="text-sm text-gray-300 line-clamp-2">{complaint.description}</p>
+                                        </div>
+                                    </div>
 
                                     <div className="pt-3 border-t border-gray-800 flex justify-between items-center">
                                         <span className="text-xs text-gray-500 font-medium">By: {complaint.username || 'Anonymous'}</span>

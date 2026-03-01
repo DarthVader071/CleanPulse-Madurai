@@ -20,7 +20,7 @@ const storage = multer.diskStorage({
 const upload = multer({ storage: storage });
 
 // Check authentication for all complaint routes
-//router.use(authMiddleware);
+router.use(authMiddleware);
 
 // @route   POST /api/complaints
 // @desc    Create a new complaint

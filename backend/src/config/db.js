@@ -32,6 +32,7 @@ const initDB = async () => {
   user_id INTEGER REFERENCES users(id) ON DELETE CASCADE,
   title VARCHAR(200) NOT NULL,
   description TEXT NOT NULL,
+  waste_type VARCHAR(100),
   location_lat DECIMAL(10, 8),
   location_lng DECIMAL(11, 8),
   status VARCHAR(50) DEFAULT 'Pending',

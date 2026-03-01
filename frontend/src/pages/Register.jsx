@@ -25,7 +25,7 @@ const Register = () => {
         try {
             await register(formData);
             toast.success('Registration successful! Welcome to CleanPulse.');
-            navigate(formData.role === 'Admin' ? '/admin' : '/dashboard');
+            navigate(formData.role === 'Admin' || formData.role === 'Worker' ? '/admin' : '/dashboard');
         } catch (err) {
             toast.error(err.response?.data?.message || 'Failed to register');
         } finally {
@@ -111,10 +111,10 @@ const Register = () => {
                                 name="role"
                                 value={formData.role}
                                 onChange={handleChange}
-                                className="appearance-none block w-full px-5 py-4 border border-gray-700/50 rounded-2xl bg-gray-900/50 text-white focus:outline-none focus:ring-2 focus:ring-emerald-500/50 focus:bg-gray-900 focus:border-transparent transition-all duration-300 ring-offset-gray-900"
+                                className="appearance-none block w-full px-5 py-4 border border-gray-700/50 rounded-2xl bg-gray-900/50 text-white focus:outline-none focus:ring-2 focus:ring-emerald-500/50 focus:bg-gray-900 focus:border-transparent transition-all duration-300 ring-offset-gray-900 cursor-pointer"
                             >
-                                <option value="Citizen">Citizen</option>
-                                <option value="Worker">Worker</option>
+                                <option value="Citizen" className="bg-gray-900 text-white">Citizen</option>
+                                <option value="Worker" className="bg-gray-900 text-white">Worker</option>
                             </select>
                         </div>
 

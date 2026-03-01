@@ -29,24 +29,26 @@ export const AuthProvider = ({ children }) => {
     const login = async (credentials) => {
         const res = await authAPI.login(credentials);
         localStorage.setItem('token', res.data.token);
-        // Use user object from response, fallback to profile fetch
         if (res.data.user) {
             setUser(res.data.user);
+            return res.data.user;
         } else {
             const profileRes = await authAPI.getProfile();
             setUser(profileRes.data);
+            return profileRes.data;
         }
     };
 
     const register = async (data) => {
         const res = await authAPI.register(data);
         localStorage.setItem('token', res.data.token);
-        // Use user object from response, fallback to profile fetch
         if (res.data.user) {
             setUser(res.data.user);
+            return res.data.user;
         } else {
             const profileRes = await authAPI.getProfile();
             setUser(profileRes.data);
+            return profileRes.data;
         }
     };
 

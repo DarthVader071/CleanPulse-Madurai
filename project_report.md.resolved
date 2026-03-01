@@ -1,0 +1,70 @@
+# CleanPulse Madurai – Project Report
+
+**CleanPulse Madurai** is an AI-powered civic waste intelligence system designed to modernize urban waste management in Madurai. It integrates machine learning for hotspot prediction, gamification for citizen engagement, and route optimization for sanitation operations.
+
+## 🔗 GitHub Repository
+[DarthVader071/CleanPulse-Madurai](https://github.com/DarthVader071/CleanPulse-Madurai)
+
+---
+
+## 🛠 Tech Stack
+
+The project follows a modular, full-stack architecture with dedicated services for AI and logistics.
+
+### 🌐 Frontend (Dashboard)
+-   **Framework**: React 19 (Vite)
+-   **Routing**: React Router DOM v7
+-   **Styling**: Vanilla CSS3 + TailwindCSS
+-   **Maps**: Leaflet & React-Leaflet
+-   **Icons**: Lucide React
+-   **Notifications**: React Hot Toast
+-   **Data Fetching**: Axios
+
+### 🔙 Backend (API)
+-   **Runtime**: Node.js
+-   **Framework**: Express.js
+-   **Database**: PostgreSQL
+-   **Authentication**: JSON Web Token (JWT) & BcryptJS
+-   **File Uploads**: Multer
+-   **Database Driver**: `pg` (node-postgres)
+
+### 🤖 AI/ML Service (Hotspot Prediction)
+-   **Language**: Python 3.10+
+-   **API Framework**: FastAPI
+-   **Machine Learning**: Scikit-learn (Random Forest/Gradient Boosting)
+-   **Data Processing**: Pandas, NumPy
+-   **Server**: Uvicorn
+
+### 📍 Route Optimization Service
+-   **Language**: Python
+-   **API Framework**: FastAPI
+-   **Core Logic**: Geospatial coordinate analysis and pathfinding.
+
+---
+
+## 🌟 Key Features
+
+### 1. AI-Driven Hotspot Prediction
+-   Analyzes historical complaint density and temporal patterns.
+-   Provides "Hotspot Risk Scores" to help authorities preemptively clear areas.
+
+### 2. Gamified Citizen Reporting
+-   Interactive interface for submitting complaints with photo evidence and geolocation.
+-   **Leaderboard System**: Citizens earn "Impact Points" for verified reports, encouraging community participation.
+
+### 3. Intelligent Route Optimization
+-   Generates the most efficient collection routes for sanitation teams.
+-   Balances real-time complaints with predicted hotspots to maximize efficiency.
+
+### 4. Role-Based Access Control (RBAC)
+-   **Citizen**: Report waste, track status, view leaderboard.
+-   **Admin**: High-level analytics, user management, and city-wide monitoring.
+-   **Worker**: Personalized task list with optimized navigation paths.
+
+---
+
+## 🔧 Tools & Environment
+-   **Development**: Visual Studio Code, Git
+-   **Database Management**: pgAdmin / psql
+-   **Environments**: Python Virtual Environments (`venv`), NPM
+-   **Deployment Readiness**: Modular structure with [.env](file:///c:/Users/vishnu/Desktop/Smart%20and%20Green%20Madurai%20city/backend/.env) configuration for all services.

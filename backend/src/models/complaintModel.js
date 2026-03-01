@@ -1,23 +1,24 @@
 const { query } = require('../config/db');
 
 const complaintModel = {
-    create: async (userId, title, description, lat, lng, imageUrl, riskScore, riskLevel) => {
+    create: async (userId, title, description, wasteType, lat, lng, imageUrl, riskScore, riskLevel) => {
         const text = `
       INSERT INTO complaints(
         user_id,
         title,
         description,
+        waste_type,
         location_lat,
         location_lng,
         image_url,
         risk_score,
         risk_level
       )
-      VALUES($1,$2,$3,$4,$5,$6,$7,$8)
+      VALUES($1,$2,$3,$4,$5,$6,$7,$8,$9)
       RETURNING *
     `;
 
-        const values = [userId, title, description, lat, lng, imageUrl, riskScore, riskLevel];
+        const values = [userId, title, description, wasteType, lat, lng, imageUrl, riskScore, riskLevel];
 
         const { rows } = await query(text, values);
         return rows[0];

@@ -5,7 +5,7 @@ const mlService = require('../services/mlService');
 
 const createComplaint = async (req, res) => {
     try {
-        const { title, description, location_lat, location_lng, latitude, longitude } = req.body;
+        const { title, description, waste_type, location_lat, location_lng, latitude, longitude } = req.body;
 
         console.log("Incoming request body:", req.body);
 
@@ -32,6 +32,7 @@ const createComplaint = async (req, res) => {
             req.user ? req.user.id : 1, // Fallback for testing mode
             title || 'Waste Hotspot',
             description,
+            waste_type || 'General',
             lat,
             lng,
             finalImage,

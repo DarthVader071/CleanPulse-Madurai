@@ -21,7 +21,15 @@ const userModel = {
     },
 
     getLeaderboard: async (limit = 10) => {
-        const text = 'SELECT id, username, points FROM users WHERE role = $1 ORDER BY points DESC LIMIT $2';
+        const text = `
+            SELECT u.id, u.username, u.points, COUNT(c.id) as "complaintsCount"
+            FROM users u
+            LEFT JOIN complaints c ON u.id = c.user_id
+            WHERE u.role = $1
+            GROUP BY u.id
+            ORDER BY u.points DESC
+            LIMIT $2
+        `;
         const { rows } = await query(text, ['Citizen', limit]);
         return rows;
     },
